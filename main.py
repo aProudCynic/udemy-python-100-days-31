@@ -19,12 +19,8 @@ canvas.grid(row=0, column=0)
 canvas.create_image(400, 263, image=card_front_image)
 canvas.config(bg=BACKGROUND_COLOR, highlightthickness=0)
 
-website_label = Label(text="French")
-website_label.grid(row=1, column=0, columnspan=2)
-
-
-word_label = Label(text="word")
-word_label.grid(row=2, column=0, columnspan=2)
+canvas.create_text(400, 150, text="Title", font=("Ariel", 48, "italic"))
+canvas.create_text(400, 263, text="word", font=("Ariel", 60, "bold"))
 
 
 def create_image_button(image_path):
