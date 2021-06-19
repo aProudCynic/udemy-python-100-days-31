@@ -19,7 +19,7 @@ canvas.grid(row=0, column=0, columnspan=2)
 canvas.create_image(400, 263, image=card_front_image)
 canvas.config(bg=BACKGROUND_COLOR, highlightthickness=0)
 
-canvas.create_text(400, 150, text="Title", font=("Ariel", 48, "italic"))
+canvas.create_text(400, 150, text="French", font=("Ariel", 48, "italic"))
 french_word_display_id = canvas.create_text(400, 263, text="word", font=("Ariel", 60, "bold"))
 
 
