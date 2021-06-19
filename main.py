@@ -37,7 +37,6 @@ def load_questions():
 
 
 questions = load_questions()
-game_on = True
 word_pair = questions.sample()
 french_word = word_pair["French"].values[0]
 canvas.itemconfig(french_word_display_id, text=french_word)
