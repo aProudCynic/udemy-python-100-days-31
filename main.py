@@ -4,6 +4,7 @@ from tkinter import (
     PhotoImage,
     Canvas,
 )
+import pandas as pd
 
 BACKGROUND_COLOR = "#B1DDC6"
 
@@ -19,7 +20,7 @@ canvas.create_image(400, 263, image=card_front_image)
 canvas.config(bg=BACKGROUND_COLOR, highlightthickness=0)
 
 canvas.create_text(400, 150, text="Title", font=("Ariel", 48, "italic"))
-canvas.create_text(400, 263, text="word", font=("Ariel", 60, "bold"))
+french_word_display_id = canvas.create_text(400, 263, text="word", font=("Ariel", 60, "bold"))
 
 
 right_button_image = PhotoImage(file="images/right.png")
@@ -28,6 +29,18 @@ right_button.grid(row=1, column=0)
 wrong_button_image = PhotoImage(file="images/wrong.png")
 wrong_button = Button(image=wrong_button_image, highlightthickness=0)
 wrong_button.grid(row=1, column=1)
+
+
+def load_questions():
+    csv_content = pd.read_csv("data/french_words.csv")
+    return pd.DataFrame(csv_content)
+
+
+questions = load_questions()
+game_on = True
+word_pair = questions.sample()
+french_word = word_pair["French"].values[0]
+canvas.itemconfig(french_word_display_id, text=french_word)
 
 window.mainloop()
 
