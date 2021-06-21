@@ -6,6 +6,7 @@ from tkinter import (
     Canvas,
 )
 import pandas as pd
+from pandas import DataFrame
 
 BACKGROUND_COLOR = "#B1DDC6"
 BACK_SIDE_TEXT_COLOUR = "white"
@@ -15,6 +16,7 @@ ALL_WORDS_FILE_PATH = "data/french_words.csv"
 
 word_pair = None
 current_counter_id = None
+csv_content: DataFrame = None
 
 window = Tk()
 window.title("Flash cards")
@@ -24,6 +26,7 @@ canvas = Canvas(width=800, height=526)
 
 
 def load_questions():
+    global csv_content
     file_to_load = TO_LEARN_FILE_PATH if os.path.exists(TO_LEARN_FILE_PATH) else ALL_WORDS_FILE_PATH
     csv_content = pd.read_csv(file_to_load)
     return pd.DataFrame(csv_content)
@@ -50,6 +53,10 @@ def generate_new_word():
 
 
 def accept_word():
+    global csv_content
+    english_value = word_pair["English"].values[0]
+    csv_content = csv_content[csv_content["English"].str.match(english_value)]
+    csv_content.to_csv(TO_LEARN_FILE_PATH)
     generate_new_word()
 
 
