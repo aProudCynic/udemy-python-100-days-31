@@ -9,6 +9,7 @@ import pandas as pd
 BACKGROUND_COLOR = "#B1DDC6"
 
 word_pair = None
+current_counter_id = None
 
 window = Tk()
 window.title("Flash cards")
@@ -30,7 +31,10 @@ def flip_card():
 
 
 def generate_new_word():
+    global current_counter_id
     global word_pair
+    if current_counter_id is not None:
+        window.after_cancel(current_counter_id)
     word_pair = questions.sample()
     canvas.itemconfig(language, text="French")
     canvas.itemconfig(canvas_image, image=card_front_image)
