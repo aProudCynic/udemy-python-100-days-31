@@ -1,3 +1,4 @@
+import os
 from tkinter import (
     Tk,
     Button,
@@ -9,6 +10,8 @@ import pandas as pd
 BACKGROUND_COLOR = "#B1DDC6"
 BACK_SIDE_TEXT_COLOUR = "white"
 FRONT_SIDE_TEXT_COLOUR = "black"
+TO_LEARN_FILE_PATH = "data/to_learn.csv"
+ALL_WORDS_FILE_PATH = "data/french_words.csv"
 
 word_pair = None
 current_counter_id = None
@@ -21,7 +24,8 @@ canvas = Canvas(width=800, height=526)
 
 
 def load_questions():
-    csv_content = pd.read_csv("data/french_words.csv")
+    file_to_load = TO_LEARN_FILE_PATH if os.path.exists(TO_LEARN_FILE_PATH) else ALL_WORDS_FILE_PATH
+    csv_content = pd.read_csv(file_to_load)
     return pd.DataFrame(csv_content)
 
 
@@ -45,6 +49,16 @@ def generate_new_word():
     window.after(3000, func=flip_card)
 
 
+def accept_word():
+    generate_new_word()
+
+
+def reject_word():
+    header_added = not os.path.exists(TO_LEARN_FILE_PATH)
+    word_pair.to_csv(TO_LEARN_FILE_PATH, mode="a", header=header_added)
+    generate_new_word()
+
+
 questions = load_questions()
 
 card_front_image = PhotoImage(file="images/card_front.png")
@@ -58,10 +72,10 @@ french_word_display_id = canvas.create_text(400, 263, text="word", font=("Ariel"
 language = canvas.create_text(400, 150, text="French", font=("Ariel", 48, "italic"))
 
 right_button_image = PhotoImage(file="images/right.png")
-right_button = Button(image=right_button_image, highlightthickness=0, command=generate_new_word)
+right_button = Button(image=right_button_image, highlightthickness=0, command=accept_word)
 right_button.grid(row=1, column=0)
 wrong_button_image = PhotoImage(file="images/wrong.png")
-wrong_button = Button(image=wrong_button_image, highlightthickness=0, command=generate_new_word)
+wrong_button = Button(image=wrong_button_image, highlightthickness=0, command=reject_word)
 wrong_button.grid(row=1, column=1)
 
 generate_new_word()
