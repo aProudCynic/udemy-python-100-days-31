@@ -61,8 +61,6 @@ def accept_word():
 
 
 def reject_word():
-    header_added = not os.path.exists(TO_LEARN_FILE_PATH)
-    word_pair.to_csv(TO_LEARN_FILE_PATH, mode="a", header=header_added)
     generate_new_word()
 
 
