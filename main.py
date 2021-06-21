@@ -24,6 +24,7 @@ def load_questions():
 
 def flip_card():
     canvas.itemconfig(language, text="English")
+    canvas.itemconfig(canvas_image, image=card_back_image)
     english_word = word_pair["English"].values[0]
     canvas.itemconfig(french_word_display_id, text=english_word)
 
@@ -32,6 +33,7 @@ def generate_new_word():
     global word_pair
     word_pair = questions.sample()
     canvas.itemconfig(language, text="French")
+    canvas.itemconfig(canvas_image, image=card_front_image)
     french_word = word_pair["French"].values[0]
     canvas.itemconfig(french_word_display_id, text=french_word)
     window.after(3000, func=flip_card)
@@ -40,6 +42,7 @@ def generate_new_word():
 questions = load_questions()
 
 card_front_image = PhotoImage(file="images/card_front.png")
+card_back_image = PhotoImage(file="images/card_back.png")
 canvas.grid(row=0, column=0, columnspan=2)
 
 canvas_image = canvas.create_image(400, 263, image=card_front_image)
