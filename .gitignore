@@ -3,3 +3,5 @@
 poetry.lock
 pyproject.toml
 .DS_Store
+data/to_learn.csv
+virtualenv
