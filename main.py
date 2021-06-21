@@ -7,6 +7,8 @@ from tkinter import (
 import pandas as pd
 
 BACKGROUND_COLOR = "#B1DDC6"
+BACK_SIDE_TEXT_COLOUR = "white"
+FRONT_SIDE_TEXT_COLOUR = "black"
 
 word_pair = None
 current_counter_id = None
@@ -24,10 +26,10 @@ def load_questions():
 
 
 def flip_card():
-    canvas.itemconfig(language, text="English")
+    canvas.itemconfig(language, text="English", fill=BACK_SIDE_TEXT_COLOUR)
     canvas.itemconfig(canvas_image, image=card_back_image)
     english_word = word_pair["English"].values[0]
-    canvas.itemconfig(french_word_display_id, text=english_word, fill="white")
+    canvas.itemconfig(french_word_display_id, text=english_word, fill=BACK_SIDE_TEXT_COLOUR)
 
 
 def generate_new_word():
@@ -36,10 +38,10 @@ def generate_new_word():
     if current_counter_id is not None:
         window.after_cancel(current_counter_id)
     word_pair = questions.sample()
-    canvas.itemconfig(language, text="French")
+    canvas.itemconfig(language, text="French", fill=FRONT_SIDE_TEXT_COLOUR)
     canvas.itemconfig(canvas_image, image=card_front_image)
     french_word = word_pair["French"].values[0]
-    canvas.itemconfig(french_word_display_id, text=french_word, fill="black")
+    canvas.itemconfig(french_word_display_id, text=french_word, fill=FRONT_SIDE_TEXT_COLOUR)
     window.after(3000, func=flip_card)
 
 
